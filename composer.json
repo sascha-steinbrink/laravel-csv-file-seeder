@@ -1,0 +1,55 @@
+{
+	"name": "sascha-steinbrink/laravel-csv-file-seeder",
+	"description": "Seed or export the database from/to csv or zip files.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Sascha Steinbrink",
+			"email": "sascha.steinbrink@gmx.de"
+		}
+	],
+	"homepage": "https://github.com/sascha-steinbrink/laravel-csv-file-seeder",
+	"keywords": [
+		"laravel",
+		"seed",
+		"seeder",
+		"seeds",
+		"seeding",
+		"csv",
+		"csv seed",
+		"csv seeder",
+		"csv seeds",
+		"csv seeding",
+		"export",
+		"export csv"
+	],
+	"require": {
+		"illuminate/support": "~5"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~7.0",
+		"mockery/mockery": "^1.1",
+		"orchestra/testbench": "~3.7.5",
+		"sempro/phpunit-pretty-print": "^1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"SaschaSteinbrink\\LaravelCsvFileSeeder\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"SaschaSteinbrink\\LaravelCsvFileSeeder\\Tests\\": "tests"
+		}
+	},
+	"scripts": {
+		"test": "phpunit"
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"SaschaSteinbrink\\LaravelCsvFileSeeder\\LaravelCsvFileSeederServiceProvider"
+			]
+		}
+	}
+}
