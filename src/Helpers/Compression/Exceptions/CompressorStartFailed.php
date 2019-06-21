@@ -2,16 +2,14 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions;
 
-
 use Exception;
 
 /**
- * CompressorStartFailed
+ * CompressorStartFailed.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 15.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions
  */
 class CompressorStartFailed extends Exception
 {

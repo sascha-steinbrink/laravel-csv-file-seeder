@@ -8,7 +8,6 @@ namespace SaschaSteinbrink\LaravelCsvFileSeeder\Traits;
  * @version : 1.0
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Traits
  */
 trait HasConfigFile
 {
@@ -98,6 +97,7 @@ trait HasConfigFile
     protected function readConfigValue(string $configKey, $default, ?string $prefix = null)
     {
         $prefix = $this->parseConfigPrefix($prefix);
+
         return config("$this->configFileName.$prefix$configKey", $default);
     }
 
@@ -110,8 +110,7 @@ trait HasConfigFile
      */
     protected function parseConfigPrefix(?string $prefix)
     {
-        if(!filled($prefix))
-        {
+        if (! filled($prefix)) {
             return '';
         }
 

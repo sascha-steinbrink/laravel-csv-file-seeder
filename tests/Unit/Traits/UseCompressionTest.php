@@ -1,10 +1,10 @@
 <?php
 
-namespace SaschaSteinbrink\LaravelCsvFileSeeder\Unit\Traits;
+namespace SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Traits;
 
 
+use Orchestra\Testbench\TestCase;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseCompression;
-use Tests\TestCase;
 
 /**
  * UseCompressionTest
@@ -12,7 +12,7 @@ use Tests\TestCase;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 17.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Unit\Traits
+ * @package SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Traits
  */
 class UseCompressionTest extends TestCase
 {

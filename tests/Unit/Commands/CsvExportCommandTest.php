@@ -1,6 +1,6 @@
 <?php
 
-namespace SaschaSteinbrink\LaravelCsvFileSeeder\tests\Unit\Commands;
+namespace SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Commands;
 
 function sys_get_temp_dir()
 {
@@ -11,7 +11,7 @@ function sys_get_temp_dir()
 use SaschaSteinbrink\LaravelCsvFileSeeder\Commands\CsvExportCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Console\Output\OutputInterface;
-use SaschaSteinbrink\LaravelCsvFileSeeder\tests\DbTestCase;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Tests\DbTestCase;
 
 
 /**
@@ -20,7 +20,7 @@ use SaschaSteinbrink\LaravelCsvFileSeeder\tests\DbTestCase;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 18.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Unit\Commands
+ * @package SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Commands
  */
 class CsvExportCommandTest extends DbTestCase
 {

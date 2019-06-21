@@ -1,6 +1,6 @@
 <?php
 
-namespace SaschaSteinbrink\LaravelCsvFileSeeder\tests\Unit\Compression;
+namespace SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Compression;
 
 
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Decompressor;
@@ -13,6 +13,7 @@ use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\Decompr
  * @author : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created: 13.06.2019
  * @version: 1.0
+ * @package SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Compression
  */
 class DecompressorTest extends CompressionTestCase
 {

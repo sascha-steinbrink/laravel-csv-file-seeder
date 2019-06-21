@@ -2,25 +2,23 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder;
 
-
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\DbHelper;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasConfigFile;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseCompression;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseDbConnection;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasCommandUsage;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseDbConnection;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\ProcessesCsvFile;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Compressor;
 
 /**
- * CsvExporter
+ * CsvExporter.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder
  */
 class CsvExporter
 {
@@ -36,14 +34,14 @@ class CsvExporter
     /**
      * The total number of records written.
      *
-     * @var integer
+     * @var int
      */
     protected $totalRecords = 0;
 
     /**
      * The total amount of bytes written.
      *
-     * @var integer
+     * @var int
      */
     protected $totalBytes = 0;
 
@@ -57,7 +55,7 @@ class CsvExporter
     /**
      * Whether or not the csv files should contain the column names.
      *
-     * @var boolean
+     * @var bool
      */
     protected $withHeaders = true;
 
@@ -138,7 +136,7 @@ class CsvExporter
      */
     protected function readConfig()
     {
-        $commandPrefix = "commands.export_csv";
+        $commandPrefix = 'commands.export_csv';
 
         $this->setConnection(config('database.default'));
         $this->dataPath = $this->readConfigValue('data_path', database_path('data'));
@@ -191,8 +189,9 @@ class CsvExporter
             return;
         }
 
-        if($path === config('laravel-csv-file-seeder.data_path')) {
+        if ($path === config('laravel-csv-file-seeder.data_path')) {
             mkdir($path);
+
             return;
         }
 
@@ -207,7 +206,7 @@ class CsvExporter
     {
         $tables = DbHelper::getTables($this->connection, $this->except);
 
-        foreach ($tables AS $tableName) {
+        foreach ($tables as $tableName) {
             $this->exportTable($tableName);
         }
     }
@@ -217,9 +216,9 @@ class CsvExporter
      */
     protected function exportTablesWithHeaders()
     {
-        $tables = DbHelper::getTablesWithColumns($this->connection,$this->except);
+        $tables = DbHelper::getTablesWithColumns($this->connection, $this->except);
 
-        foreach ($tables AS $tableName => $columns) {
+        foreach ($tables as $tableName => $columns) {
             $this->exportTable($tableName, $columns);
         }
     }
@@ -232,7 +231,7 @@ class CsvExporter
      */
     protected function exportTable(string $table, ?array $columns = null)
     {
-        if (!$this->hasTable($table)) {
+        if (! $this->hasTable($table)) {
             return;
         }
 
@@ -255,8 +254,8 @@ class CsvExporter
      */
     protected function hasTable(string $table): bool
     {
-        if (!$hasTable = Schema::connection($this->connection)->hasTable($table)) {
-            $this->warn("<comment>Table $table not found!", "Export csv", "v");
+        if (! $hasTable = Schema::connection($this->connection)->hasTable($table)) {
+            $this->warn("<comment>Table $table not found!", 'Export csv', 'v');
         }
 
         return $hasTable;
@@ -274,7 +273,7 @@ class CsvExporter
         $data = [];
         $items = DB::connection($this->connection)->table($table)->get()->toArray();
 
-        foreach ($items AS $item) {
+        foreach ($items as $item) {
             $data[] = array_values((array) $item);
         }
 
@@ -293,7 +292,7 @@ class CsvExporter
         $path = $this->csvFile->getRealPath();
         $records = 0;
 
-        foreach ($data AS $line => $row) {
+        foreach ($data as $line => $row) {
             if ($this->addRow($row)) {
                 $records++;
             }
@@ -316,8 +315,8 @@ class CsvExporter
         $filePath = $this->getFilePath($fileName, $this->dataPath);
 
         try {
-            $this->openCsvFile($fileName, $this->dataPath, "w");
-            $this->warn($filePath, "Exporting csv");
+            $this->openCsvFile($fileName, $this->dataPath, 'w');
+            $this->warn($filePath, 'Exporting csv');
         } catch (Exception $e) {
             $this->error("Could not open $filePath.");
             $this->errorExit();
@@ -342,8 +341,8 @@ class CsvExporter
 
         $this->warn(
             "Could not write the following row: $rowString into $path",
-            "Exporting csv",
-            "v"
+            'Exporting csv',
+            'v'
         );
 
         return false;
@@ -358,8 +357,8 @@ class CsvExporter
      */
     protected function assertFileExists(string $path)
     {
-        if (!($written = file_exists($path))) {
-            $this->warn("Could not write $path", "Exporting csv", "v");
+        if (! ($written = file_exists($path))) {
+            $this->warn("Could not write $path", 'Exporting csv', 'v');
         }
 
         return $written;
@@ -385,7 +384,7 @@ class CsvExporter
 
         $this->success(
             "$records records written into $path ($bytes bytes)",
-            "Exported csv"
+            'Exported csv'
         );
     }
 
@@ -398,7 +397,7 @@ class CsvExporter
     {
         $archivePath = $this->getFilePath($this->archiveName, $this->archivePath);
 
-        $this->warn($archivePath, "Compressing zip", 'v');
+        $this->warn($archivePath, 'Compressing zip', 'v');
         $compressor = Compressor::create()
                                 ->make($archivePath, '*.csv', $this->dataPath)
                                 ->includeFiles($this->writtenFileNames);
@@ -418,7 +417,7 @@ class CsvExporter
         }
 
         $this->removeTempFiles($this->writtenFileNames);
-        $this->success($archivePath, "Compressed zip", 'v');
+        $this->success($archivePath, 'Compressed zip', 'v');
     }
 
     /**
@@ -429,7 +428,7 @@ class CsvExporter
     protected function debugCommand(Compressor $compressor)
     {
         $compressorCmd = $compressor->getDumpCommand($this->isDebug());
-        $this->warn($compressorCmd, "Compressing zip", 'vv');
+        $this->warn($compressorCmd, 'Compressing zip', 'vv');
     }
 
     /**
@@ -437,12 +436,12 @@ class CsvExporter
      */
     protected function successExit()
     {
-        $records = $this->totalRecords === 1 ? "1 record" : "$this->totalRecords records";
+        $records = $this->totalRecords === 1 ? '1 record' : "$this->totalRecords records";
         $totalFiles = count($this->writtenFileNames);
-        $files = $totalFiles === 1 ? "1 file" : "$totalFiles files";
+        $files = $totalFiles === 1 ? '1 file' : "$totalFiles files";
 
         $this->success(
-            "Csv exporting completed successfully. " .
+            'Csv exporting completed successfully. '.
             "Exported $records into $files ($this->totalBytes bytes)"
         );
     }
@@ -453,6 +452,6 @@ class CsvExporter
     protected function errorExit()
     {
         $this->closeCsvFile();
-        $this->exit("Database export failed!");
+        $this->exit('Database export failed!');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace SaschaSteinbrink\LaravelCsvFileSeeder\tests\Unit\Compression;
+namespace SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Compression;
 
 
 use Illuminate\Support\Str;
@@ -11,9 +11,10 @@ use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\Compres
 /**
  * CompressorTest
  *
- * @author : Sascha Steinbrink <sascha.steinbrink@gmx.de>
- * @created: 13.06.2019
- * @version: 1.0
+ * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
+ * @created : 13.06.2019
+ * @version : 1.0
+ * @package SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Compression
  */
 class CompressorTest extends CompressionTestCase
 {

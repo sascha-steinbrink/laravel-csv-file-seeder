@@ -1,10 +1,10 @@
 <?php
 
-namespace SaschaSteinbrink\LaravelCsvFileSeeder\Unit\Traits;
+namespace SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Traits;
 
 
+use SaschaSteinbrink\LaravelCsvFileSeeder\Tests\FileTestCase;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasConfigFile;
-use Tests\TestCase;
 
 /**
  * HasConfigFileTest
@@ -12,9 +12,9 @@ use Tests\TestCase;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 17.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Unit\Traits
+ * @package SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Traits
  */
-class HasConfigFileTest extends TestCase
+class HasConfigFileTest extends FileTestCase
 {
     use HasConfigFile;
 
@@ -64,8 +64,7 @@ class HasConfigFileTest extends TestCase
         $configFileName = 'laravel-csv-file-seeder';
         $prefix = 'commands.export_csv';
         $expected = [
-            'migrations',
-            'password_resets',
+            'sqlite_sequence',
         ];
 
         $this->setConfigFileName($configFileName);

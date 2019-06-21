@@ -2,16 +2,14 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions;
 
-
 use Exception;
 
 /**
- * DecompressionFailed
+ * DecompressionFailed.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 15.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions
  */
 class DecompressionFailed extends Exception
 {
@@ -26,7 +24,8 @@ class DecompressionFailed extends Exception
     /**
      * @return DecompressionFailed
      */
-    public static function encryptionFlagMustBeSet() {
+    public static function encryptionFlagMustBeSet()
+    {
         return new static("The archive is encrypted therefore the 'encrypted' option must be enabled to decompress the archive.");
     }
 
@@ -35,6 +34,6 @@ class DecompressionFailed extends Exception
      */
     public static function archiveNotFound()
     {
-        return new static("The archive could not be found!");
+        return new static('The archive could not be found!');
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace SaschaSteinbrink\LaravelCsvFileSeeder\Unit\Traits;
+namespace SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Traits;
 
 
-use SaschaSteinbrink\LaravelCsvFileSeeder\tests\FileTestCase;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Tests\FileTestCase;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasFileUsage;
 
 /**
@@ -12,7 +12,7 @@ use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasFileUsage;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 17.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Unit\Traits
+ * @package SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Traits
  */
 class HasFileUsageTest extends FileTestCase
 {

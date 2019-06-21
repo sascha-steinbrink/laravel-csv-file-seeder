@@ -2,20 +2,18 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Commands;
 
-use Illuminate\Console\Command;
 use RuntimeException;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorStartFailed;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use SaschaSteinbrink\LaravelCsvFileSeeder\CsvExporter;
-
+use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorStartFailed;
 
 /**
- * CsvExportCommand
+ * CsvExportCommand.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Commands
  */
 class CsvExportCommand extends Command
 {
@@ -151,7 +149,7 @@ class CsvExportCommand extends Command
             return [];
         }
 
-        return explode(",", $fileOption);
+        return explode(',', $fileOption);
     }
 
     /**
@@ -188,7 +186,7 @@ class CsvExportCommand extends Command
                 '-x',
                 InputOption::VALUE_OPTIONAL,
                 'The tables that should be ignored',
-                implode(",", config('laravel-csv-file-seeder.commands.export_csv.except', [])),
+                implode(',', config('laravel-csv-file-seeder.commands.export_csv.except', [])),
             ],
             [
                 'with-headers',

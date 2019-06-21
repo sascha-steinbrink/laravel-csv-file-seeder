@@ -1,11 +1,11 @@
 <?php
 
-namespace SaschaSteinbrink\LaravelCsvFileSeeder\Unit\Commands;
+namespace SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Commands;
 
 
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Tester\CommandTester;
-use SaschaSteinbrink\LaravelCsvFileSeeder\tests\DbTestCase;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Tests\DbTestCase;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Commands\CsvSeedCommand;
 
 /**
@@ -14,7 +14,7 @@ use SaschaSteinbrink\LaravelCsvFileSeeder\Commands\CsvSeedCommand;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 18.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Unit\Commands
+ * @package SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit\Commands
  */
 class CsvSeedCommandTest extends DbTestCase
 {

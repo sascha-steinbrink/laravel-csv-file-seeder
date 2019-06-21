@@ -1,6 +1,6 @@
 <?php
 
-namespace SaschaSteinbrink\LaravelCsvFileSeeder\tests;
+namespace SaschaSteinbrink\LaravelCsvFileSeeder\Tests;
 
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 18.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder
+ * @package SaschaSteinbrink\LaravelCsvFileSeeder\Tests
  */
 abstract class DbTestCase extends FileTestCase
 {
@@ -26,23 +26,14 @@ abstract class DbTestCase extends FileTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
+        parent::getEnvironmentSetUp($app);
+
         // Setup default database to use sqlite test database
         $app['config']->set('database.default', 'sqlite_testing');
         $app['config']->set('database.connections.sqlite_testing', [
             'driver'                  => 'sqlite',
             'database'                => __DIR__ . '/Files/test.sqlite',
             'prefix'                  => ''
-        ]);
-
-        $app['config']->set('laravel-csv-file-seeder', [
-            'connection' => 'sqlite_testing',
-            'data_path'  => __DIR__ .  '/tmp',
-            'archive_name' => 'db-csv-export.zip',
-            'commands'   => [
-                'export_csv' => [
-                    'except' => ['sqlite_sequence'],
-                ],
-            ],
         ]);
 
         $app['config']->set('test.file-path', __DIR__ . '/Files');

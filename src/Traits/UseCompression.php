@@ -8,14 +8,13 @@ namespace SaschaSteinbrink\LaravelCsvFileSeeder\Traits;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 15.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Traits
  */
 trait UseCompression
 {
     /**
      * Whether or not the exported csv files should be saved in a zip archive.
      *
-     * @var boolean
+     * @var bool
      */
     protected $zipped = false;
 
@@ -24,19 +23,19 @@ trait UseCompression
      *
      * @var string
      */
-    protected $archiveName = "";
+    protected $archiveName = '';
 
     /**
      * The archive path.
      *
      * @var string
      */
-    protected $archivePath = "";
+    protected $archivePath = '';
 
     /**
      * Whether or not the exported zip archive should be encrypted.
      *
-     * @var boolean
+     * @var bool
      */
     protected $encrypted = false;
 
@@ -45,7 +44,7 @@ trait UseCompression
      *
      * @var string
      */
-    protected $encryptionPassword = "";
+    protected $encryptionPassword = '';
 
     /**
      * @return bool

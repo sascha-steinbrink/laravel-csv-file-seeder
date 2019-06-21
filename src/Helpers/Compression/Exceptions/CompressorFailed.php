@@ -2,17 +2,15 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions;
 
-
 use Exception;
 use Symfony\Component\Process\Process;
 
 /**
- * CompressionFailed
+ * CompressionFailed.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 15.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions
  */
 class CompressorFailed extends Exception
 {
@@ -23,7 +21,7 @@ class CompressorFailed extends Exception
      */
     public static function processFailed(Process $process)
     {
-        $error = sprintf('The command "%s" failed.' . "\n\nExit Code: %s(%s)\n\nWorking directory: %s",
+        $error = sprintf('The command "%s" failed.'."\n\nExit Code: %s(%s)\n\nWorking directory: %s",
             $process->getCommandLine(),
             $process->getExitCode(),
             $process->getExitCodeText(),

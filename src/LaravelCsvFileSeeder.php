@@ -9,19 +9,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasConfigFile;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseCompression;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseDbConnection;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasCommandUsage;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseDbConnection;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\ProcessesCsvFile;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Decompressor;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorFailed;
 
 /**
- * LaravelCsvFileSeeder
+ * LaravelCsvFileSeeder.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder
  */
 class LaravelCsvFileSeeder extends Seeder
 {
@@ -37,28 +36,28 @@ class LaravelCsvFileSeeder extends Seeder
     /**
      * The number rows in the rows array.
      *
-     * @var integer
+     * @var int
      */
     protected $rowCount;
 
     /**
      * The total number of files seeded.
      *
-     * @var integer
+     * @var int
      */
     protected $totalFiles = 0;
 
     /**
      * The total number of rows seeded.
      *
-     * @var integer
+     * @var int
      */
     protected $totalRows = 0;
 
     /**
      * The total number of queries fired.
      *
-     * @var integer
+     * @var int
      */
     protected $totalQueries = 0;
 
@@ -74,35 +73,35 @@ class LaravelCsvFileSeeder extends Seeder
      * Indicates if any leading or trailing white space should be trimmed
      * from the csv fields.
      *
-     * @var boolean
+     * @var bool
      */
     protected $shouldTrim;
 
     /**
      * The number of rows to read before inserting the data into the database.
      *
-     * @var integer
+     * @var int
      */
     protected $insertChunkSize;
 
     /**
      * Whether or not the desired table should be truncated before seeding.
      *
-     * @var boolean
+     * @var bool
      */
     protected $truncate;
 
     /**
      * Indicates if the foreign key checks should be enabled/disabled while truncating.
      *
-     * @var boolean
+     * @var bool
      */
     protected $foreignKeyChecks;
 
     /**
      * The the default setting of auto_detect_line_endings.
      *
-     * @var boolean
+     * @var bool
      */
     protected $autoDetectLineEndingsDefault;
 
@@ -289,7 +288,7 @@ class LaravelCsvFileSeeder extends Seeder
 
         $files = $this->getFiles();
 
-        foreach ($files AS $fileName) {
+        foreach ($files as $fileName) {
             $table = $this->getTableName($fileName);
 
             if ($this->hasTable($table)) {
@@ -311,7 +310,7 @@ class LaravelCsvFileSeeder extends Seeder
     {
         $archivePath = $this->getFilePath($this->archiveName, $this->archivePath);
 
-        $this->warn($archivePath, "Decompressing zip", 'v');
+        $this->warn($archivePath, 'Decompressing zip', 'v');
         $decompressor = Decompressor::create()
                                     ->make($archivePath, $this->dataPath)
                                     ->overwriteExistingFiles();
@@ -330,7 +329,7 @@ class LaravelCsvFileSeeder extends Seeder
             $this->errorExit(false);
         }
 
-        $this->success($archivePath, "Decompressed zip", 'v');
+        $this->success($archivePath, 'Decompressed zip', 'v');
     }
 
     /**
@@ -341,7 +340,7 @@ class LaravelCsvFileSeeder extends Seeder
     protected function debugCommand(Decompressor $decompressor)
     {
         $decompressorCmd = $decompressor->getDumpCommand($this->isDebug());
-        $this->warn($decompressorCmd, "Decompressing zip", 'vv');
+        $this->warn($decompressorCmd, 'Decompressing zip', 'vv');
     }
 
     /**
@@ -351,7 +350,7 @@ class LaravelCsvFileSeeder extends Seeder
      */
     protected function clearTempFiles()
     {
-        if (!$this->zipped) {
+        if (! $this->zipped) {
             return;
         }
 
@@ -384,13 +383,12 @@ class LaravelCsvFileSeeder extends Seeder
     {
         $this->clearTempFiles();
 
-        $rows = "$this->totalRows " . Str::plural('row', $this->totalRows);
-        $tables = "$this->totalFiles " . Str::plural('table', $this->totalFiles);
-        $queries = "$this->totalQueries " . Str::plural('query', $this->totalQueries);
+        $rows = "$this->totalRows ".Str::plural('row', $this->totalRows);
+        $tables = "$this->totalFiles ".Str::plural('table', $this->totalFiles);
+        $queries = "$this->totalQueries ".Str::plural('query', $this->totalQueries);
 
-        $this->success("Csv seeding completed successfully. Inserted $rows into $tables using $queries.", "CsvSeeder");
+        $this->success("Csv seeding completed successfully. Inserted $rows into $tables using $queries.", 'CsvSeeder');
     }
-
 
     /**
      * Enable auto_detect_line_endings setting.
@@ -399,7 +397,7 @@ class LaravelCsvFileSeeder extends Seeder
     {
         $this->autoDetectLineEndingsDefault = ini_get('auto_detect_line_endings');
 
-        if (!$this->autoDetectLineEndingsDefault) {
+        if (! $this->autoDetectLineEndingsDefault) {
             ini_set('auto_detect_line_endings', true);
         }
     }
@@ -409,13 +407,13 @@ class LaravelCsvFileSeeder extends Seeder
      */
     protected function resetAutoDetectLineEndingsSetting()
     {
-        if (!$this->autoDetectLineEndingsDefault) {
+        if (! $this->autoDetectLineEndingsDefault) {
             ini_set('auto_detect_line_endings', $this->autoDetectLineEndingsDefault);
         }
     }
 
     /**
-     * Strip UTF-8 BOM characters from the start of a string
+     * Strip UTF-8 BOM characters from the start of a string.
      *
      * Taken from https://github.com/Flynsarmy/laravel-csv-seeder/blob/master/src/Flynsarmy/CsvSeeder/CsvSeeder.php
      *
@@ -448,7 +446,7 @@ class LaravelCsvFileSeeder extends Seeder
         $this->resetRows();
         $line = [];
 
-        while (!$this->csvFile->eof() && $line !== null) {
+        while (! $this->csvFile->eof() && $line !== null) {
             if (($line = $this->getLine($rowCount)) === null) {
                 continue;
             }
@@ -486,8 +484,8 @@ class LaravelCsvFileSeeder extends Seeder
 
             $this->warn(
                 "<comment>File $path is empty!</comment>",
-                "Seeding csv",
-                "v"
+                'Seeding csv',
+                'v'
             );
         }
 
@@ -527,8 +525,8 @@ class LaravelCsvFileSeeder extends Seeder
         $filePath = $this->getFilePath($fileName, $this->dataPath);
 
         try {
-            $this->openCsvFile($fileName, $this->dataPath, "r");
-            $this->warn($filePath, "Seeding csv");
+            $this->openCsvFile($fileName, $this->dataPath, 'r');
+            $this->warn($filePath, 'Seeding csv');
         } catch (Exception $e) {
             $this->error("Could not open $filePath.");
             $this->errorExit();
@@ -544,8 +542,8 @@ class LaravelCsvFileSeeder extends Seeder
     protected function updateProgress(string $table, int $rowCount)
     {
         $rowCount = $rowCount === 0 ? $rowCount : $rowCount - 1;
-        $rows = "$rowCount " . Str::plural('row', $rowCount);
-        $this->success("Inserted $rows into $table table", "Seeded csv");
+        $rows = "$rowCount ".Str::plural('row', $rowCount);
+        $this->success("Inserted $rows into $table table", 'Seeded csv');
 
         $this->totalRows += $rowCount;
         $this->totalFiles++;
@@ -566,16 +564,16 @@ class LaravelCsvFileSeeder extends Seeder
         if ($headersCount === 0) {
             $this->warn(
                 "<comment>No columns found for $table table.!</comment>",
-                "Seeding csv",
-                "v"
+                'Seeding csv',
+                'v'
             );
         }
 
         if ($headersCount === 1) {
             $this->warn(
                 "<comment>Only one column found for $table table. Maybe you have the wrong delimiter ($this->delimiter) if you expect more!</comment>",
-                "Seeding csv",
-                "v"
+                'Seeding csv',
+                'v'
             );
         }
 
@@ -599,8 +597,8 @@ class LaravelCsvFileSeeder extends Seeder
 
         $this->warn(
             "<comment>$message</comment>",
-            "CsvSeeder",
-            "v"
+            'CsvSeeder',
+            'v'
         );
 
         return false;
@@ -619,12 +617,12 @@ class LaravelCsvFileSeeder extends Seeder
             try {
                 $this->clearTempFiles();
             } catch (CompressorFailed $e) {
-                $this->warn("Could not clear temp files!", null, 'vvv');
+                $this->warn('Could not clear temp files!', null, 'vvv');
             }
         }
 
         $this->enableForeignKeyChecks();
-        $this->exit("Database seeding failed!");
+        $this->exit('Database seeding failed!');
     }
 
     /**
@@ -665,18 +663,17 @@ class LaravelCsvFileSeeder extends Seeder
             try {
                 DB::connection($this->connection)->table($table)->insert($this->rows);
                 $this->totalQueries++;
-                $rows = Str::plural("row", $this->rowCount);
+                $rows = Str::plural('row', $this->rowCount);
 
                 $this->warn("[$this->totalQueries] Saved $this->rowCount $rows into $table table!",
-                    "Chunk insert",
-                    "vvv"
+                    'Chunk insert',
+                    'vvv'
                 );
-
             } catch (Exception $e) {
                 $this->handleException(
                     $e,
                     "Error while inserting into <comment>$table</comment> table:",
-                    "Inserting",
+                    'Inserting',
                     ['duplicate-entry', 'foreign-key-checks']
                 );
             }
@@ -711,8 +708,8 @@ class LaravelCsvFileSeeder extends Seeder
         }
 
         $this->warn("Table $table not found! The file $table.csv will be omitted!",
-            "CsvSeeder",
-            "v"
+            'CsvSeeder',
+            'v'
         );
 
         return false;
@@ -731,7 +728,7 @@ class LaravelCsvFileSeeder extends Seeder
     {
         $result = [];
 
-        foreach ($headers AS $index => $value) {
+        foreach ($headers as $index => $value) {
             if (in_array($value, $tableColumns)) {
                 $result[$value] = $this->getDataValue($data[$index]);
             }
@@ -750,7 +747,7 @@ class LaravelCsvFileSeeder extends Seeder
      */
     protected function getDataValue($value): string
     {
-        if ($value === "NULL") {
+        if ($value === 'NULL') {
             return null;
         }
 
@@ -776,7 +773,7 @@ class LaravelCsvFileSeeder extends Seeder
     {
         $files = scandir($this->dataPath, 1);
 
-        $csvFiles = array_filter($files, function($file) {
+        $csvFiles = array_filter($files, function ($file) {
             return $this->isValidCsvFile($file);
         });
 
@@ -794,7 +791,7 @@ class LaravelCsvFileSeeder extends Seeder
     {
         $path = $this->zipped ? $this->archivePath : $this->dataPath;
 
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             $this->error("The directory '$path' could not be found!");
             $this->errorExit();
         }
@@ -813,8 +810,8 @@ class LaravelCsvFileSeeder extends Seeder
 
         if ($notFoundCount > 0) {
             $fileTxt = $notFoundCount === 1 ? 'file' : 'files';
-            $fileNames = implode(", ", $filesNotFound);
-            $this->warn("The $fileTxt $fileNames could not be found!", "CsvSeeder", "v");
+            $fileNames = implode(', ', $filesNotFound);
+            $this->warn("The $fileTxt $fileNames could not be found!", 'CsvSeeder', 'v');
         }
     }
 
@@ -830,10 +827,10 @@ class LaravelCsvFileSeeder extends Seeder
         $filePath = $this->getFilePath($file, $this->dataPath);
 
         if (is_dir($filePath)) {
-            if (!in_array($file, ['.', '..'])) {
+            if (! in_array($file, ['.', '..'])) {
                 $this->warn(
                     "<comment>File could not be processed! Directory given: '$file'</comment>",
-                    "CsvSeeder",
+                    'CsvSeeder',
                     'vvv'
                 );
             }
@@ -841,10 +838,10 @@ class LaravelCsvFileSeeder extends Seeder
             return false;
         }
 
-        if (pathinfo($filePath, PATHINFO_EXTENSION) !== "csv") {
+        if (pathinfo($filePath, PATHINFO_EXTENSION) !== 'csv') {
             $this->warn(
                 "<comment>File could not be processed! No valid csv file given: '$file'</comment>",
-                "CsvSeeder",
+                'CsvSeeder',
                 'vvv'
             );
 
@@ -865,7 +862,7 @@ class LaravelCsvFileSeeder extends Seeder
      */
     protected function truncateTable(string $table)
     {
-        if (!$this->truncate) {
+        if (! $this->truncate) {
             return;
         }
 
@@ -875,7 +872,7 @@ class LaravelCsvFileSeeder extends Seeder
             $this->handleException(
                 $e,
                 "Error while truncating <comment>$table</comment> table:",
-                "Truncating",
+                'Truncating',
                 ['foreign-key-checks']
             );
         }
@@ -886,7 +883,7 @@ class LaravelCsvFileSeeder extends Seeder
      */
     protected function disableForeignKeyChecks()
     {
-        if (!$this->foreignKeyChecks) {
+        if (! $this->foreignKeyChecks) {
             Schema::connection($this->connection)
                   ->disableForeignKeyConstraints();
         }
@@ -897,7 +894,7 @@ class LaravelCsvFileSeeder extends Seeder
      */
     protected function enableForeignKeyChecks()
     {
-        if (!$this->foreignKeyChecks) {
+        if (! $this->foreignKeyChecks) {
             Schema::connection($this->connection)
                   ->enableForeignKeyConstraints();
         }
@@ -930,11 +927,11 @@ class LaravelCsvFileSeeder extends Seeder
      */
     protected function displayHints(array $possibleHints, string $msg)
     {
-        if (!filled($possibleHints)) {
+        if (! filled($possibleHints)) {
             return;
         }
 
-        foreach ($possibleHints AS $hint) {
+        foreach ($possibleHints as $hint) {
             $this->hints($hint, $msg);
         }
     }
@@ -987,9 +984,9 @@ class LaravelCsvFileSeeder extends Seeder
     {
         if ($this->hasAccessViolationTruncateTable($msg) || $this->hasIntegrityViolationAddOrUpdateRow($msg)) {
             $this->info(
-                "To avoid foreign key constraint issues you can disable the 'foreign_key_checks' " .
+                "To avoid foreign key constraint issues you can disable the 'foreign_key_checks' ".
                 "option globally in the config file or you can set the '--foreign-key-checks' option to false!",
-                "Truncating"
+                'Truncating'
             );
         }
     }
@@ -1019,7 +1016,7 @@ class LaravelCsvFileSeeder extends Seeder
         if ($this->hasIntegrityConstraintDuplicateEntry($msg)) {
             $this->info(
                 "To avoid duplicate entries you can enable the 'truncate' option in the config file!",
-                "Inserting"
+                'Inserting'
             );
         }
     }

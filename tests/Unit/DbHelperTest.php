@@ -1,10 +1,10 @@
 <?php
 
-namespace SaschaSteinbrink\LaravelCsvFileSeeder\tests\Unit;
+namespace SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit;
 
 
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\DbHelper;
-use SaschaSteinbrink\LaravelCsvFileSeeder\tests\DbTestCase;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Tests\DbTestCase;
 
 
 /**
@@ -13,7 +13,7 @@ use SaschaSteinbrink\LaravelCsvFileSeeder\tests\DbTestCase;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\tests\Unit
+ * @package SaschaSteinbrink\LaravelCsvFileSeeder\Tests\Unit
  */
 class DbHelperTest extends DbTestCase
 {

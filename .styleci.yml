@@ -1,1 +1,11 @@
 preset: laravel
+
+finder:
+  exclude:
+    - "tests"
+  name:
+    - "*.php"
+
+disabled:
+  - trailing_comma_in_multiline_array
+  - unary_operator_spaces

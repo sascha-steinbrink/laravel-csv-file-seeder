@@ -2,14 +2,12 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Traits;
 
-
 /**
- * HasFileUsage
+ * HasFileUsage.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Traits
  */
 trait HasFileUsage
 {
@@ -23,7 +21,7 @@ trait HasFileUsage
      */
     protected function getFilePath(string $file, string $path)
     {
-        return join(DIRECTORY_SEPARATOR, [$path, $file]);
+        return implode(DIRECTORY_SEPARATOR, [$path, $file]);
     }
 
     /**
@@ -36,11 +34,11 @@ trait HasFileUsage
      */
     protected function assertFileExtension(string $fileName, string $extension)
     {
-        if(ends_with($fileName, $extension)) {
+        if (ends_with($fileName, $extension)) {
             return $fileName;
         }
 
-        if(!starts_with($extension, ".")) {
+        if (! starts_with($extension, '.')) {
             $extension = ".$extension";
         }
 
@@ -55,9 +53,9 @@ trait HasFileUsage
      */
     protected function removeFiles(array $fileNames, string $path)
     {
-        foreach($fileNames AS $fileName) {
+        foreach ($fileNames as $fileName) {
             $filePath = $this->getFilePath($fileName, $path);
-            if(file_exists($filePath)) {
+            if (file_exists($filePath)) {
                 unlink($filePath);
             }
         }
