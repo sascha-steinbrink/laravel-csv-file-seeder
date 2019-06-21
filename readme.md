@@ -471,14 +471,14 @@ If you discover any security related issues, please email author email instead o
 
 license. Please see the [license file](license.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/saschasteinbrink/laravelcsvfileseeder.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/saschasteinbrink/laravelcsvfileseeder.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/saschasteinbrink/laravelcsvfileseeder/master.svg?style=flat-square
-[ico-styleci]: https://styleci.io/repos/12345678/shield
+[ico-version]: https://img.shields.io/packagist/v/sascha-steinbrink/laravel-csv-file-seeder.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/sascha-steinbrink/laravel-csv-file-seeder.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/sascha-steinbrink/laravel-csv-file-seeder/master.svg?style=flat-square
+[ico-styleci]: https://styleci.io/repos/192954833/shield
 
-[link-packagist]: https://packagist.org/packages/saschasteinbrink/laravelcsvfileseeder
-[link-downloads]: https://packagist.org/packages/saschasteinbrink/laravelcsvfileseeder
-[link-travis]: https://travis-ci.org/saschasteinbrink/laravelcsvfileseeder
-[link-styleci]: https://styleci.io/repos/12345678
-[link-author]: https://github.com/saschasteinbrink
+[link-packagist]: https://packagist.org/packages/sascha-steinbrink/laravel-csv-file-seeder
+[link-downloads]: https://packagist.org/packages/sascha-steinbrink/laravel-csv-file-seeder
+[link-travis]: https://travis-ci.org/sascha-steinbrink/laravel-csv-file-seeder
+[link-styleci]: https://styleci.io/repos/192954833
+[link-author]: https://github.com/sascha-steinbrink
 [link-contributors]: ../../contributors
