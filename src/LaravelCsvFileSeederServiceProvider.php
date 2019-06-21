@@ -5,12 +5,11 @@ namespace SaschaSteinbrink\LaravelCsvFileSeeder;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * LaravelCsvFileSeederServiceProvider
+ * LaravelCsvFileSeederServiceProvider.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder
  */
 class LaravelCsvFileSeederServiceProvider extends ServiceProvider
 {
@@ -34,7 +33,7 @@ class LaravelCsvFileSeederServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/laravel-csv-file-seeder.php', 'laravel-csv-file-seeder');
+        $this->mergeConfigFrom(__DIR__.'/../config/laravel-csv-file-seeder.php', 'laravel-csv-file-seeder');
     }
 
     /**
@@ -58,7 +57,7 @@ class LaravelCsvFileSeederServiceProvider extends ServiceProvider
     {
         // Publishing the configuration file.
         $this->publishes([
-            __DIR__ . '/../config/laravel-csv-file-seeder.php' => config_path('laravel-csv-file-seeder.php'),
+            __DIR__.'/../config/laravel-csv-file-seeder.php' => config_path('laravel-csv-file-seeder.php'),
         ], 'config');
 
         // Registering package commands.

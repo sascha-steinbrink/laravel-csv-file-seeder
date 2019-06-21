@@ -2,8 +2,8 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Traits;
 
-use Illuminate\Console\Command;
 use RuntimeException;
+use Illuminate\Console\Command;
 
 /**
  * Has command usage.
@@ -11,7 +11,6 @@ use RuntimeException;
  * @version : 1.0
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Traits
  */
 trait HasCommandUsage
 {
@@ -61,7 +60,7 @@ trait HasCommandUsage
      */
     public function info(string $message, ?string $task = null, ?string $verbosity = null)
     {
-        $this->toConsole($message, "fg=blue", $task, $verbosity);
+        $this->toConsole($message, 'fg=blue', $task, $verbosity);
     }
 
     /**
@@ -73,7 +72,7 @@ trait HasCommandUsage
      */
     public function success(string $message, ?string $task = null, ?string $verbosity = null)
     {
-        $this->toConsole($message, "info", $task, $verbosity);
+        $this->toConsole($message, 'info', $task, $verbosity);
     }
 
     /**
@@ -85,7 +84,7 @@ trait HasCommandUsage
      */
     public function warn(string $message, ?string $task = null, ?string $verbosity = null)
     {
-        $this->toConsole($message, "comment", $task, $verbosity);
+        $this->toConsole($message, 'comment', $task, $verbosity);
     }
 
     /**
@@ -96,7 +95,7 @@ trait HasCommandUsage
      */
     public function error(string $message, ?string $task = null)
     {
-        $this->toConsole($message, "fg=red", $task);
+        $this->toConsole($message, 'fg=red', $task);
     }
 
     /**
@@ -109,14 +108,14 @@ trait HasCommandUsage
      */
     protected function toConsole(string $message, string $type, ?string $task = null, ?string $verbosity = null)
     {
-        if(!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return;
         }
 
         $closingType = $type;
 
-        if (!in_array($type, ['info', 'comment', 'question', 'error'])) {
-            $closingType = "";
+        if (! in_array($type, ['info', 'comment', 'question', 'error'])) {
+            $closingType = '';
         }
 
         $line = "<$type>$task: </$closingType>$message";
@@ -135,7 +134,7 @@ trait HasCommandUsage
      */
     protected function isVerbose(): bool
     {
-        if(!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return false;
         }
 
@@ -149,7 +148,7 @@ trait HasCommandUsage
      */
     protected function isVeryVerbose(): bool
     {
-        if(!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return false;
         }
 
@@ -163,7 +162,7 @@ trait HasCommandUsage
      */
     protected function isDebug(): bool
     {
-        if(!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return false;
         }
 
@@ -177,7 +176,7 @@ trait HasCommandUsage
      */
     protected function isQuiet(): bool
     {
-        if(!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return false;
         }
 

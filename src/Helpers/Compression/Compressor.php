@@ -2,10 +2,9 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression;
 
-
-use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressionFailed;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorFailed;
 use Symfony\Component\Process\Process;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorFailed;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressionFailed;
 
 /**
  * Compressor.
@@ -13,7 +12,6 @@ use Symfony\Component\Process\Process;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder
  */
 class Compressor extends BaseCompressor
 {
@@ -29,7 +27,7 @@ class Compressor extends BaseCompressor
      *
      * @return Compressor
      */
-    public static function create(): Compressor
+    public static function create(): self
     {
         return new static();
     }
@@ -44,7 +42,7 @@ class Compressor extends BaseCompressor
      *
      * @return $this
      */
-    public function make(string $archive, string $inPath, string $workingDirectory = null): Compressor
+    public function make(string $archive, string $inPath, string $workingDirectory = null): self
     {
         $this->archive = $this->assertFileZipExtension($archive);
         $this->inPath = $inPath;
@@ -64,10 +62,10 @@ class Compressor extends BaseCompressor
      */
     protected function validateProcess()
     {
-        if($this->process->isSuccessful() && $this->hasZipEmpty($this->process)) {
+        if ($this->process->isSuccessful() && $this->hasZipEmpty($this->process)) {
             throw CompressionFailed::zipFileEmpty();
         }
-        if(!file_exists($this->archive)) {
+        if (! file_exists($this->archive)) {
             throw CompressionFailed::zipFileNotCreated();
         }
 
@@ -85,7 +83,7 @@ class Compressor extends BaseCompressor
     {
         $output = $process->getOutput();
 
-        return preg_match("/(zip warning: zip file empty)/", $output) === 1;
+        return preg_match('/(zip warning: zip file empty)/', $output) === 1;
     }
 
     /**
@@ -113,7 +111,7 @@ class Compressor extends BaseCompressor
     protected function addEncryption()
     {
         if ($this->encrypt) {
-            $this->addToCommand("--encrypt");
+            $this->addToCommand('--encrypt');
         }
     }
 

@@ -10,7 +10,6 @@ use SplFileObject;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Traits
  */
 trait ProcessesCsvFile
 {
@@ -28,14 +27,14 @@ trait ProcessesCsvFile
      *
      * @var string
      */
-    protected $dataPath = "";
+    protected $dataPath = '';
 
     /**
      * The csv file delimiter character to use for parsing csv fields.
      *
      * @var string
      */
-    protected $delimiter = ",";
+    protected $delimiter = ',';
 
     /**
      * The csv file enclosure character to use for parsing csv fields.
@@ -49,7 +48,7 @@ trait ProcessesCsvFile
      *
      * @var string
      */
-    protected $escape = "\\";
+    protected $escape = '\\';
 
     /**
      * @return string
@@ -124,7 +123,7 @@ trait ProcessesCsvFile
      */
     protected function assertCsvFileExtension(string $fileName)
     {
-        return $this->assertFileExtension($fileName, ".csv");
+        return $this->assertFileExtension($fileName, '.csv');
     }
 
     /**

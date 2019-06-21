@@ -2,18 +2,16 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Helpers;
 
+use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use InvalidArgumentException;
-
 
 /**
- * DbHelper
+ * DbHelper.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Helpers
  */
 class DbHelper
 {
@@ -90,9 +88,9 @@ class DbHelper
         $tableList = self::getTableList($connection);
         $tables = [];
 
-        foreach ($tableList AS $table) {
-            foreach ($table AS $key => $value) {
-                if (!in_array($value, $ignore)) {
+        foreach ($tableList as $table) {
+            foreach ($table as $key => $value) {
+                if (! in_array($value, $ignore)) {
                     $tables[] = $value;
                 }
             }
@@ -130,7 +128,7 @@ class DbHelper
         $connection = self::assertConnection($connection);
         $tableColumnMapping = [];
 
-        foreach ($tables AS $table) {
+        foreach ($tables as $table) {
             if (Schema::connection($connection)->hasTable($table)) {
                 $tableColumnMapping[$table] = Schema::connection($connection)
                                                     ->getColumnListing($table);

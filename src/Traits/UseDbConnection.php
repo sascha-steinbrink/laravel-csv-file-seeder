@@ -8,7 +8,6 @@ namespace SaschaSteinbrink\LaravelCsvFileSeeder\Traits;
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 15.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Traits
  */
 trait UseDbConnection
 {
@@ -17,7 +16,7 @@ trait UseDbConnection
      *
      * @var string
      */
-    protected $connection = "";
+    protected $connection = '';
 
     /**
      * @return string
@@ -55,7 +54,7 @@ trait UseDbConnection
      */
     protected function assertConnection(?string $connection)
     {
-        if (!filled($connection)) {
+        if (! filled($connection)) {
             $connection = config('database.default');
         }
 

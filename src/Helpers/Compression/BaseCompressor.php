@@ -2,8 +2,6 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression;
 
-
-use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorFailed;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorStartFailed;
@@ -14,7 +12,6 @@ use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\Compres
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Zip
  */
 abstract class BaseCompressor
 {
@@ -101,7 +98,7 @@ abstract class BaseCompressor
      *
      * @return BaseCompressor
      */
-    public function workingDirectory(string $directory): BaseCompressor
+    public function workingDirectory(string $directory): self
     {
         $this->workingDirectory = $directory;
 
@@ -128,7 +125,7 @@ abstract class BaseCompressor
      * @return $this
      * @throws CompressorStartFailed
      */
-    public function includeFiles(array $files): BaseCompressor
+    public function includeFiles(array $files): self
     {
         if (filled($this->excludeFiles)) {
             throw CompressorStartFailed::conflictingParameters('includeFiled', 'excludeFiles');
@@ -147,7 +144,7 @@ abstract class BaseCompressor
      * @return $this
      * @throws CompressorStartFailed
      */
-    public function excludeFiles(array $files): BaseCompressor
+    public function excludeFiles(array $files): self
     {
         if (filled($this->files)) {
             throw CompressorStartFailed::conflictingParameters('excludeFiles', 'includeFiles');
@@ -165,7 +162,7 @@ abstract class BaseCompressor
      *
      * @return $this
      */
-    public function usePassword(string $password): BaseCompressor
+    public function usePassword(string $password): self
     {
         $this->password = escapeshellarg($password);
         $this->encrypt = true;
@@ -222,7 +219,7 @@ abstract class BaseCompressor
      */
     protected function validateProcess()
     {
-        if($this->process->isSuccessful()) {
+        if ($this->process->isSuccessful()) {
             return;
         }
 
@@ -268,7 +265,7 @@ abstract class BaseCompressor
      *
      * @return string
      */
-    protected abstract function buildCommand(): string;
+    abstract protected function buildCommand(): string;
 
     /**
      * Add the destination file to the command.

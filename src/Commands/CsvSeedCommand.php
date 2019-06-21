@@ -2,20 +2,18 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Commands;
 
-
+use RuntimeException;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use RuntimeException;
 use Symfony\Component\Console\Input\InputOption;
 use SaschaSteinbrink\LaravelCsvFileSeeder\LaravelCsvFileSeeder;
 
 /**
- * CsvSeedCommand
+ * CsvSeedCommand.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Commands
  */
 class CsvSeedCommand extends Command
 {
@@ -42,7 +40,7 @@ class CsvSeedCommand extends Command
      */
     public function handle()
     {
-        if (!$this->confirmToProceed()) {
+        if (! $this->confirmToProceed()) {
             return;
         }
 
@@ -140,7 +138,7 @@ class CsvSeedCommand extends Command
             return [];
         }
 
-        return explode(",", $fileOption);
+        return explode(',', $fileOption);
     }
 
     /**

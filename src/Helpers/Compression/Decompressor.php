@@ -2,7 +2,6 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression;
 
-
 use Closure;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
@@ -11,12 +10,11 @@ use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\Decompr
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorStartFailed;
 
 /**
- * Decompressor
+ * Decompressor.
  *
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
  * @version : 1.0
- * @package SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compressors
  */
 class Decompressor extends BaseCompressor
 {
@@ -46,7 +44,7 @@ class Decompressor extends BaseCompressor
      *
      * @return Decompressor
      */
-    public static function create(): Decompressor
+    public static function create(): self
     {
         return new static();
     }
@@ -61,7 +59,7 @@ class Decompressor extends BaseCompressor
      *
      * @return $this
      */
-    public function make(string $archive, string $outPath, string $workingDirectory = null): Decompressor
+    public function make(string $archive, string $outPath, string $workingDirectory = null): self
     {
         $this->archive = $this->assertFileZipExtension($archive);
         $this->outPath = $outPath;
@@ -100,7 +98,7 @@ class Decompressor extends BaseCompressor
      */
     public function listFileNamesExcept(string $archive, array $except): array
     {
-        $except = implode(" ", $except);
+        $except = implode(' ', $except);
         $archive = $this->assertFileZipExtension($archive);
 
         $output = $this->runCommand("unzip -Z -1 $archive -x $except");
@@ -139,11 +137,11 @@ class Decompressor extends BaseCompressor
         $output = $this->runCommand("unzip -Z -v $archive");
 
         $matches = [];
-        if (!preg_match("/(file security status:)\W+((?:[a-zA-Z]*))/", $output, $matches)) {
+        if (! preg_match("/(file security status:)\W+((?:[a-zA-Z]*))/", $output, $matches)) {
             return false;
         }
 
-        return $matches[2] === "encrypted";
+        return $matches[2] === 'encrypted';
     }
 
     /**
@@ -152,7 +150,7 @@ class Decompressor extends BaseCompressor
      * @return $this
      * @throws CompressorStartFailed
      */
-    public function overwriteExistingFiles(): Decompressor
+    public function overwriteExistingFiles(): self
     {
         if ($this->neverOverwriteExistingFiles) {
             throw CompressorStartFailed::conflictingParameters(
@@ -172,7 +170,7 @@ class Decompressor extends BaseCompressor
      * @return $this
      * @throws CompressorStartFailed
      */
-    public function neverOverwriteExistingFiles(): Decompressor
+    public function neverOverwriteExistingFiles(): self
     {
         if ($this->overwriteExistingFiles) {
             throw CompressorStartFailed::conflictingParameters(
@@ -187,7 +185,6 @@ class Decompressor extends BaseCompressor
     }
 
     /**
-     *
      * @return string
      * @throws CompressorFailed
      */
@@ -210,7 +207,7 @@ class Decompressor extends BaseCompressor
     protected function assertNoPasswordPrompting($type, $buffer)
     {
         if (Process::ERR === $type) {
-            if (Str::contains($buffer, "password:")) {
+            if (Str::contains($buffer, 'password:')) {
                 throw DecompressionFailed::encryptionFlagMustBeSet();
             }
         }
@@ -303,11 +300,11 @@ class Decompressor extends BaseCompressor
     {
         $rule = '';
 
-        if ($this->neverOverwriteExistingFiles && !$this->overwriteExistingFiles) {
+        if ($this->neverOverwriteExistingFiles && ! $this->overwriteExistingFiles) {
             $rule = '-n';
         }
 
-        if ($this->overwriteExistingFiles && !$this->neverOverwriteExistingFiles) {
+        if ($this->overwriteExistingFiles && ! $this->neverOverwriteExistingFiles) {
             $rule = '-o';
         }
 
