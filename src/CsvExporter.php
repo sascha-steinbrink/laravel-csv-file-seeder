@@ -274,10 +274,28 @@ class CsvExporter
         $items = DB::connection($this->connection)->table($table)->get()->toArray();
 
         foreach ($items as $item) {
-            $data[] = array_values((array) $item);
+            $values = array_values((array) $item);
+            $data[] = array_map([$this, 'stringifyNullValues'], $values);
         }
 
         return $data;
+    }
+
+    /**
+     * If the given value is null it will be changed to 'NULL' otherwise the value
+     * itself will be returned.
+     *
+     * @param $value
+     *
+     * @return string
+     */
+    protected function stringifyNullValues($value)
+    {
+        if($value === null) {
+            $value = 'NULL';
+        }
+
+        return $value;
     }
 
     /**
