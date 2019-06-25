@@ -256,7 +256,7 @@ class CsvExporter
      */
     protected function exportTable(string $table, ?array $columns = null)
     {
-        if (!$this->hasTable($table)) {
+        if (! $this->hasTable($table)) {
             return;
         }
 
@@ -278,7 +278,7 @@ class CsvExporter
      */
     protected function hasTable(string $table): bool
     {
-        if (!$hasTable = Schema::connection($this->connection)->hasTable($table)) {
+        if (! $hasTable = Schema::connection($this->connection)->hasTable($table)) {
             $this->warn("<comment>Table $table not found!", 'Export csv', 'v');
         }
 
@@ -435,7 +435,7 @@ class CsvExporter
      */
     protected function assertFileExists(string $path)
     {
-        if (!($written = file_exists($path))) {
+        if (! ($written = file_exists($path))) {
             $this->warn("Could not write $path", 'Exporting csv', 'v');
         }
 
@@ -521,7 +521,7 @@ class CsvExporter
         $files = $totalFiles === 1 ? '1 file' : "$totalFiles files";
 
         $this->success(
-            'Csv exporting completed successfully. ' .
+            'Csv exporting completed successfully. '.
             "Exported $records into $files ($this->totalBytes bytes)"
         );
     }
