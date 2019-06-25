@@ -743,9 +743,9 @@ class LaravelCsvFileSeeder extends Seeder
      *
      * @param $value
      *
-     * @return string
+     * @return null|string
      */
-    protected function getDataValue($value): string
+    protected function getDataValue($value): ?string
     {
         if ($value === 'NULL') {
             return null;
