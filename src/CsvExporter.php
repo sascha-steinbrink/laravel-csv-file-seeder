@@ -291,7 +291,7 @@ class CsvExporter
      */
     protected function stringifyNullValues($value)
     {
-        if($value === null) {
+        if ($value === null) {
             $value = 'NULL';
         }
 
