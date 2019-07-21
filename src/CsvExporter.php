@@ -3,6 +3,7 @@
 namespace SaschaSteinbrink\LaravelCsvFileSeeder;
 
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\DbHelper;
@@ -58,6 +59,13 @@ class CsvExporter
      * @var bool
      */
     protected $withHeaders = true;
+
+    /**
+     * The number of items to be written into the csv file at a time.
+     *
+     * @var int
+     */
+    protected $exportChunkSize;
 
     /**
      * CsvExporter constructor.
@@ -132,6 +140,22 @@ class CsvExporter
     }
 
     /**
+     * @return int
+     */
+    public function getExportChunkSize(): int
+    {
+        return $this->exportChunkSize;
+    }
+
+    /**
+     * @param int $exportChunkSize
+     */
+    public function setExportChunkSize(int $exportChunkSize)
+    {
+        $this->exportChunkSize = $exportChunkSize;
+    }
+
+    /**
      * Read the configuration file to set default values.
      */
     protected function readConfig()
@@ -145,6 +169,7 @@ class CsvExporter
         $this->delimiter = $this->readConfigValue('delimiter', ',');
         $this->enclosure = $this->readConfigValue('enclosure', '"');
         $this->escape = $this->readConfigValue('escape', '\\');
+        $this->exportChunkSize = $this->readConfigValue('commands.export_csv.export_chunk_size', 100);
         $this->zipped = $this->readConfigValue('zipped', false);
         $this->archiveName = $this->readConfigValue('archive_name', 'csv-export.zip');
         $this->encrypted = $this->readConfigValue('encrypted', false);
@@ -241,8 +266,7 @@ class CsvExporter
             $data[] = $columns;
         }
 
-        $data = array_merge($data, $this->getTableData($table));
-        $this->writeCsv($table, $data);
+        $this->writeChunked($table, $data);
     }
 
     /**
@@ -264,21 +288,47 @@ class CsvExporter
     /**
      * Get the data for the given table.
      *
-     * @param string $table
+     * @param string     $table
+     * @param array|null $columns
      *
-     * @return array
+     * @return void
      */
-    protected function getTableData(string $table): array
+    protected function writeChunked(string $table, ?array $columns = null): void
     {
-        $data = [];
-        $items = DB::connection($this->connection)->table($table)->get()->toArray();
+        $firstChunk = true;
+        $this->openCsv("$table.csv");
+        $path = $this->csvFile->getRealPath();
+        $records = 0;
 
-        foreach ($items as $item) {
-            $values = array_values((array) $item);
-            $data[] = array_map([$this, 'stringifyNullValues'], $values);
+        $count = DB::connection($this->connection)->table($table)->count();
+
+        if($count > $this->exportChunkSize) {
+            $this->createProgressBar($count);
         }
 
-        return $data;
+        DB::connection($this->connection)->table($table)->chunkById($this->exportChunkSize, function($items) use(&$firstChunk, $columns, &$records) {
+            $items = $this->mapChunkData($items);
+
+            if($firstChunk) {
+                $items = filled($columns) ? array_merge($columns, $items) : $items;
+                $firstChunk = false;
+            }
+
+            $chunkedRecords = $this->addChunk($items);
+            $records += $chunkedRecords;
+
+            if($records === $chunkedRecords) {
+                $chunkedRecords--;
+            }
+
+            $this->advanceProgress($chunkedRecords);
+        });
+
+        if ($this->assertFileExists($path)) {
+            $this->updateProgress($table, $path, $records);
+        }
+
+        $this->closeCsvFile();
     }
 
     /**
@@ -299,15 +349,29 @@ class CsvExporter
     }
 
     /**
-     * Write the given table with the given data into csv.
+     * Replace all null values with 'NULL' and return the given collection as an array.
      *
-     * @param string $table
-     * @param array  $data
+     * @param Collection $items
+     *
+     * @return array
      */
-    protected function writeCsv(string $table, array $data)
+    protected function mapChunkData(Collection $items): array
     {
-        $this->openCsv("$table.csv");
-        $path = $this->csvFile->getRealPath();
+        return $items->map(function($item) {
+            $values = array_values((array) $item);
+            return array_map([$this, 'stringifyNullValues'], $values);
+        })->all();
+    }
+
+    /**
+     * Insert the given chunk data into the csv file.
+     *
+     * @param array $data
+     *
+     * @return int
+     */
+    protected function addChunk(array $data): int
+    {
         $records = 0;
 
         foreach ($data as $line => $row) {
@@ -316,11 +380,7 @@ class CsvExporter
             }
         }
 
-        if ($this->assertFileExists($path)) {
-            $this->updateProgress($table, $path, $records);
-        }
-
-        $this->closeCsvFile();
+        return $records;
     }
 
     /**
@@ -402,7 +462,9 @@ class CsvExporter
 
         $this->success(
             "$records records written into $path ($bytes bytes)",
-            'Exported csv'
+            'Exported csv',
+            null,
+            ' '
         );
     }
 

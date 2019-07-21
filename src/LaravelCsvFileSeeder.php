@@ -438,6 +438,7 @@ class LaravelCsvFileSeeder extends Seeder
     protected function seedFile(string $table, string $fileName)
     {
         $this->truncateTable($table);
+        $lineCount = $this->countCsvRows($fileName);
         $this->openCsv($fileName);
 
         $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
@@ -445,6 +446,10 @@ class LaravelCsvFileSeeder extends Seeder
         $headers = [];
         $this->resetRows();
         $line = [];
+
+        if(($lineCount - 1) > $this->insertChunkSize) {
+            $this->createProgressBar($lineCount - 1);
+        }
 
         while (! $this->csvFile->eof() && $line !== null) {
             if (($line = $this->getLine($rowCount)) === null) {
@@ -534,6 +539,28 @@ class LaravelCsvFileSeeder extends Seeder
     }
 
     /**
+     * Get the total rows of the given file.
+     *
+     * There is a known bug (46569) when using fgetcsv after seeking to a non zero position.
+     * To work around this issue we use this method to open the file get the row count and finally close file.
+     *
+     * @param string $fileName
+     *
+     * @return int
+     */
+    protected function countCsvRows(string $fileName)
+    {
+        $this->openCsv($fileName);
+
+        $this->csvFile->seek(PHP_INT_MAX);
+        $lineCount = $this->csvFile->key();
+
+        $this->closeCsvFile();
+
+        return $lineCount;
+    }
+
+    /**
      * Update the total rows and total files written.
      *
      * @param string $table
@@ -543,7 +570,7 @@ class LaravelCsvFileSeeder extends Seeder
     {
         $rowCount = $rowCount === 0 ? $rowCount : $rowCount - 1;
         $rows = "$rowCount ".Str::plural('row', $rowCount);
-        $this->success("Inserted $rows into $table table", 'Seeded csv');
+        $this->success("Inserted $rows into $table table", 'Seeded csv', null, ' ');
 
         $this->totalRows += $rowCount;
         $this->totalFiles++;
@@ -665,9 +692,12 @@ class LaravelCsvFileSeeder extends Seeder
                 $this->totalQueries++;
                 $rows = Str::plural('row', $this->rowCount);
 
+                $this->advanceProgress($this->rowCount);
+
                 $this->warn("[$this->totalQueries] Saved $this->rowCount $rows into $table table!",
                     'Chunk insert',
-                    'vvv'
+                    'vvv',
+                    ' '
                 );
             } catch (Exception $e) {
                 $this->handleException(

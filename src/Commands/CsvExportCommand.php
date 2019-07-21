@@ -123,6 +123,7 @@ class CsvExportCommand extends Command
         $exporter->setArchiveName($this->option('archive-name'));
         $exporter->setEncrypted($this->getBooleanValue('encrypted'));
         $exporter->setExcept($this->getExcept());
+        $exporter->setExportChunkSize($this->option('export-chunk-size'));
         $exporter->setWithHeaders($this->getBooleanValue('with-headers'));
         $exporter->setDelimiter($this->option('delimiter'));
         $exporter->setEnclosure($this->option('enclosure'));
@@ -216,6 +217,13 @@ class CsvExportCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'The escape character to use for parsing csv fields',
                 config('laravel-csv-file-seeder.escape', '\\'),
+            ],
+            [
+                'export-chunk-size',
+                '-s',
+                InputOption::VALUE_OPTIONAL,
+                'The escape character to use for parsing csv fields',
+                config('laravel-csv-file-seeder.commands.export_csv.export_chunk_size', 100),
             ],
             [
                 'zipped',

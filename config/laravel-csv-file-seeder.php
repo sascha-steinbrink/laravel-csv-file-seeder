@@ -188,7 +188,21 @@ return [
             'except'       => [
                 'migrations',
                 'password_resets',
-            ]
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Export chunk size
+            |--------------------------------------------------------------------------
+            |
+            | Set the number of items to be written into the csv file at a time.
+            | This will decrease the php memory needed to write the files.
+            |
+            | NOTE: If you have a large amount of data a small chunk size can cause
+            |       the export to fail e.g. out of memory exception.
+            |
+            */
+            'export_chunk_size' => 100,
         ],
     ],
 ];

@@ -4,13 +4,14 @@ namespace SaschaSteinbrink\LaravelCsvFileSeeder\Traits;
 
 use RuntimeException;
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 /**
  * Has command usage.
  *
- * @version : 1.0
  * @author  : Sascha Steinbrink <sascha.steinbrink@gmx.de>
  * @created : 11.05.2019
+ * @version : 1.0
  */
 trait HasCommandUsage
 {
@@ -20,6 +21,13 @@ trait HasCommandUsage
      * @var Command
      */
     protected $command = null;
+
+    /**
+     * The progress bar for the current task if any.
+     *
+     * @var ProgressBar
+     */
+    protected $bar = null;
 
     /**
      * Set the console command instance.
@@ -52,15 +60,54 @@ trait HasCommandUsage
     }
 
     /**
+     * Create a progress bar for long running tasks.
+     *
+     * @param int $count
+     */
+    public function createProgressBar(int $count)
+    {
+        $this->bar = $this->command->getOutput()->createProgressBar($count);
+    }
+
+    /**
+     * Determine if there is a progress bar.
+     *
+     * @return bool
+     */
+    public function hasProgressBar(): bool
+    {
+        return $this->bar !== null;
+    }
+
+    /**
+     * Advances the progress output X steps.
+     *
+     * @param int $step Number of steps to advance
+     */
+    public function advanceProgress(int $step = 1)
+    {
+        if ($this->bar === null) {
+            return;
+        }
+
+        $this->bar->advance($step);
+
+        if ($this->bar->getProgress() === $this->bar->getMaxSteps()) {
+            $this->bar = null;
+        }
+    }
+
+    /**
      * Print a blue info message to the console.
      *
      * @param string      $message
      * @param string|null $task
      * @param string|null $verbosity
+     * @param string      $prefix
      */
-    public function info(string $message, ?string $task = null, ?string $verbosity = null)
+    public function info(string $message, ?string $task = null, ?string $verbosity = null, string $prefix = '')
     {
-        $this->toConsole($message, 'fg=blue', $task, $verbosity);
+        $this->toConsole($message, 'fg=blue', $task, $verbosity, $prefix);
     }
 
     /**
@@ -69,10 +116,11 @@ trait HasCommandUsage
      * @param string      $message
      * @param string|null $task
      * @param string|null $verbosity
+     * @param string      $prefix
      */
-    public function success(string $message, ?string $task = null, ?string $verbosity = null)
+    public function success(string $message, ?string $task = null, ?string $verbosity = null, string $prefix = '')
     {
-        $this->toConsole($message, 'info', $task, $verbosity);
+        $this->toConsole($message, 'info', $task, $verbosity, $prefix);
     }
 
     /**
@@ -81,10 +129,11 @@ trait HasCommandUsage
      * @param string      $message
      * @param string|null $task
      * @param string|null $verbosity
+     * @param string      $prefix
      */
-    public function warn(string $message, ?string $task = null, ?string $verbosity = null)
+    public function warn(string $message, ?string $task = null, ?string $verbosity = null, string $prefix = '')
     {
-        $this->toConsole($message, 'comment', $task, $verbosity);
+        $this->toConsole($message, 'comment', $task, $verbosity, $prefix);
     }
 
     /**
@@ -105,23 +154,29 @@ trait HasCommandUsage
      * @param string      $type
      * @param string|null $task
      * @param string|null $verbosity
+     * @param string      $prefix
      */
-    protected function toConsole(string $message, string $type, ?string $task = null, ?string $verbosity = null)
-    {
-        if (! $this->hasCommand()) {
+    protected function toConsole(
+        string $message,
+        string $type,
+        ?string $task = null,
+        ?string $verbosity = null,
+        string $prefix = ''
+    ) {
+        if (!$this->hasCommand()) {
             return;
         }
 
         $closingType = $type;
 
-        if (! in_array($type, ['info', 'comment', 'question', 'error'])) {
+        if (!in_array($type, ['info', 'comment', 'question', 'error'])) {
             $closingType = '';
         }
 
-        $line = "<$type>$task: </$closingType>$message";
+        $line = "$prefix<$type>$task: </$closingType>$message";
 
         if ($task === null) {
-            $line = "<$type>$message</$closingType>";
+            $line = "$prefix<$type>$message</$closingType>";
         }
 
         $this->command->line($line, null, $verbosity);
@@ -134,7 +189,7 @@ trait HasCommandUsage
      */
     protected function isVerbose(): bool
     {
-        if (! $this->hasCommand()) {
+        if (!$this->hasCommand()) {
             return false;
         }
 
@@ -148,7 +203,7 @@ trait HasCommandUsage
      */
     protected function isVeryVerbose(): bool
     {
-        if (! $this->hasCommand()) {
+        if (!$this->hasCommand()) {
             return false;
         }
 
@@ -162,7 +217,7 @@ trait HasCommandUsage
      */
     protected function isDebug(): bool
     {
-        if (! $this->hasCommand()) {
+        if (!$this->hasCommand()) {
             return false;
         }
 
@@ -176,7 +231,7 @@ trait HasCommandUsage
      */
     protected function isQuiet(): bool
     {
-        if (! $this->hasCommand()) {
+        if (!$this->hasCommand()) {
             return false;
         }
 

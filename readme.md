@@ -230,7 +230,21 @@ return [
             'except' => [
                 'migrations',
                 'password_resets'
-            ]
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Export chunk size
+            |--------------------------------------------------------------------------
+            |
+            | Set the number of items to be written into the csv file at a time.
+            | This will decrease the php memory needed to write the files.
+            |
+            | NOTE: If you have a large amount of data a small chunk size can cause
+            |       the export to fail e.g. out of memory exception.
+            |
+            */
+            'export_chunk_size' => 1000,
         ]
     ]
 ];
@@ -314,18 +328,19 @@ instructions](#installation) to do so.
 
 ### Available export options
 
-| Option         |    | Default                             | Description                                           |
-|----------------|----|-------------------------------------|-------------------------------------------------------|
-| --data-path    | -p | database/data                       | The folder the csv files should be stored             |
-| --except       | -x | "migrations,password_resets"        | The tables that should be ignored                     |
-| --with-headers | -w | true                                | Should include column names                           |
-| --delimiter    | -d | ','                                 | The delimiter character to use for parsing csv fields |
-| --enclosure    | -l | '"'                                 | The enclosure character to use for parsing csv fields |
-| --escape       | -c | '\\'                                | The escape character to use for parsing csv fields    |
-| --zipped       | -z | false                               | Export data as an archive (zip) file                  |
-| --archive-name | -a | "db-csv-export.zip"                 | The archive name to use for saving                    |
-| --encrypted    | -e | false                               | Encrypt the archive                                   |
-| --connection   |    | default                             | The database connection to export                     |
+| Option              |    | Default                             | Description                                                   |
+|---------------------|----|-------------------------------------|-------------------------------------------------------        |
+| --data-path         | -p | database/data                       | The folder the csv files should be stored                     |
+| --except            | -x | "migrations,password_resets"        | The tables that should be ignored                             |
+| --with-headers      | -w | true                                | Should include column names                                   |
+| --delimiter         | -d | ','                                 | The delimiter character to use for parsing csv fields         |
+| --enclosure         | -l | '"'                                 | The enclosure character to use for parsing csv fields         |
+| --escape            | -c | '\\'                                | The escape character to use for parsing csv fields            |
+| --export-chunk-size | -s | 100                                 | The number of items to be written into the csv file at a time |
+| --zipped            | -z | false                               | Export data as an archive (zip) file                          |
+| --archive-name      | -a | "db-csv-export.zip"                 | The archive name to use for saving                            |
+| --encrypted         | -e | false                               | Encrypt the archive                                           |
+| --connection        |    | default                             | The database connection to export                             |
 
 > The ```--connection``` defaults to the default database connection (```config('database.default')```)
 

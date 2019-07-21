@@ -5,6 +5,8 @@ namespace SaschaSteinbrink\LaravelCsvFileSeeder\Commands;
 use RuntimeException;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorFailed;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorStartFailed;
 use Symfony\Component\Console\Input\InputOption;
 use SaschaSteinbrink\LaravelCsvFileSeeder\LaravelCsvFileSeeder;
 
@@ -37,6 +39,8 @@ class CsvSeedCommand extends Command
      * Execute the console command.
      *
      * @return void
+     * @throws CompressorFailed
+     * @throws CompressorStartFailed
      */
     public function handle()
     {
