@@ -447,7 +447,7 @@ class LaravelCsvFileSeeder extends Seeder
         $this->resetRows();
         $line = [];
 
-        if(($lineCount - 1) > $this->insertChunkSize) {
+        if (($lineCount - 1) > $this->insertChunkSize) {
             $this->createProgressBar($lineCount - 1);
         }
 
