@@ -163,13 +163,13 @@ trait HasCommandUsage
         ?string $verbosity = null,
         string $prefix = ''
     ) {
-        if (!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return;
         }
 
         $closingType = $type;
 
-        if (!in_array($type, ['info', 'comment', 'question', 'error'])) {
+        if (! in_array($type, ['info', 'comment', 'question', 'error'])) {
             $closingType = '';
         }
 
@@ -189,7 +189,7 @@ trait HasCommandUsage
      */
     protected function isVerbose(): bool
     {
-        if (!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return false;
         }
 
@@ -203,7 +203,7 @@ trait HasCommandUsage
      */
     protected function isVeryVerbose(): bool
     {
-        if (!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return false;
         }
 
@@ -217,7 +217,7 @@ trait HasCommandUsage
      */
     protected function isDebug(): bool
     {
-        if (!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return false;
         }
 
@@ -231,7 +231,7 @@ trait HasCommandUsage
      */
     protected function isQuiet(): bool
     {
-        if (!$this->hasCommand()) {
+        if (! $this->hasCommand()) {
             return false;
         }
 
