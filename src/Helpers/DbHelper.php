@@ -129,13 +129,33 @@ class DbHelper
         $tableColumnMapping = [];
 
         foreach ($tables as $table) {
-            if (Schema::connection($connection)->hasTable($table)) {
-                $tableColumnMapping[$table] = Schema::connection($connection)
-                                                    ->getColumnListing($table);
+            $columns = self::getTableColumnListing($table, $connection);
+
+            if ($columns !== null) {
+                $tableColumnMapping[$table] = $columns;
             }
         }
 
         return $tableColumnMapping;
+    }
+
+    /**
+     * Get the columns for the given table on the given connection. If no connection is given the
+     * the default connection will be used. If the table does not exists null will be returned.
+     *
+     * @param string      $table
+     * @param string|null $connection
+     *
+     * @return array|null
+     */
+    public static function getTableColumnListing(string $table, ?string $connection = null) {
+        $connection = self::assertConnection($connection);
+
+        if (!Schema::connection($connection)->hasTable($table)) {
+            return null;
+        }
+
+        return Schema::connection($connection)->getColumnListing($table);
     }
 
     /**
