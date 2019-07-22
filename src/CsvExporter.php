@@ -306,7 +306,11 @@ class CsvExporter
             $this->createProgressBar($count);
         }
 
-        DB::connection($this->connection)->table($table)->chunkById($this->exportChunkSize,
+        if($columns === null) {
+            $columns = DbHelper::getTableColumnListing($table, $this->connection);
+        }
+
+        DB::connection($this->connection)->table($table)->orderBy($columns[0])->chunk($this->exportChunkSize,
             function ($items) use (&$firstChunk, $columns, &$records) {
                 $items = $this->mapChunkData($items);
 
