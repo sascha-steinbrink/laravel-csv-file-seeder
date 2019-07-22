@@ -306,7 +306,7 @@ class CsvExporter
             $this->createProgressBar($count);
         }
 
-        if($columns === null) {
+        if ($columns === null) {
             $columns = DbHelper::getTableColumnListing($table, $this->connection);
         }
 

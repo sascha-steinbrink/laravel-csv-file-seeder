@@ -148,8 +148,9 @@ class DbHelper
      *
      * @return array|null
      */
-    public static function getTableColumnListing(string $table, ?string $connection = null) {
-        if (!Schema::connection($connection)->hasTable($table)) {
+    public static function getTableColumnListing(string $table, ?string $connection = null)
+    {
+        if (! Schema::connection($connection)->hasTable($table)) {
             return null;
         }
 
