@@ -2,9 +2,9 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression;
 
-use Symfony\Component\Process\Process;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorFailed;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorStartFailed;
+use Symfony\Component\Process\Process;
 
 /**
  * BaseCompressor.

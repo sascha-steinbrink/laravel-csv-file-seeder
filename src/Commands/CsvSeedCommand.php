@@ -2,13 +2,13 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Commands;
 
-use RuntimeException;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use Symfony\Component\Console\Input\InputOption;
-use SaschaSteinbrink\LaravelCsvFileSeeder\LaravelCsvFileSeeder;
+use RuntimeException;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorFailed;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorStartFailed;
+use SaschaSteinbrink\LaravelCsvFileSeeder\LaravelCsvFileSeeder;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * CsvSeedCommand.
