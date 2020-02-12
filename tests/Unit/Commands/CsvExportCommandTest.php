@@ -171,7 +171,7 @@ class CsvExportCommandTest extends DbTestCase
 
         $this->commandTester->execute(['--data-path' => $path]);
 
-        $this->assertContains("The directory '$path' could not be found!", $this->getOutput());
+        $this->assertStringContainsString("The directory '$path' could not be found!", $this->getOutput());
         $this->assertExportFailed($this->getOutput());
     }
 
@@ -219,7 +219,7 @@ class CsvExportCommandTest extends DbTestCase
             $exported = "$count records into $count files";
         }
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             "Csv exporting completed successfully. Exported $exported ($bytes bytes)",
             $output
         );
@@ -227,6 +227,6 @@ class CsvExportCommandTest extends DbTestCase
 
     protected function assertExportFailed(string $output)
     {
-        $this->assertContains('Database export failed!', $output);
+        $this->assertStringContainsString('Database export failed!', $output);
     }
 }

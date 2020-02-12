@@ -100,7 +100,7 @@ class CsvSeedCommandTest extends DbTestCase
 
         $this->commandTester->execute(['--data-path' => $path]);
 
-        $this->assertContains("The directory '$path' could not be found!", $this->getOutput());
+        $this->assertStringContainsString("The directory '$path' could not be found!", $this->getOutput());
         $this->assertSeedingFailed($this->getOutput());
     }
 
@@ -193,7 +193,7 @@ class CsvSeedCommandTest extends DbTestCase
         $seededTables = "$tables " . Str::plural('table', $tables);
         $seededQueries = "$queries " . Str::plural('query', $queries);
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             "Csv seeding completed successfully. Inserted $seededRows into $seededTables using $seededQueries.",
             $output
         );
@@ -201,6 +201,6 @@ class CsvSeedCommandTest extends DbTestCase
 
     protected function assertSeedingFailed(string $output)
     {
-        $this->assertContains('Database seeding failed!', $output);
+        $this->assertStringContainsString('Database seeding failed!', $output);
     }
 }

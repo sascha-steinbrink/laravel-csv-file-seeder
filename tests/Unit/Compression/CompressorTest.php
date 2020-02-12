@@ -137,8 +137,8 @@ class CompressorTest extends CompressionTestCase
 
         $path = Str::substr($this->filePath, 1);
         $this->assertFileExists("$this->tmpPath/export.zip");
-        $this->assertContains("adding: $path/addresses.csv", $output);
-        $this->assertContains("adding: $path/users.csv", $output);
+        $this->assertStringContainsString("adding: $path/addresses.csv", $output);
+        $this->assertStringContainsString("adding: $path/users.csv", $output);
     }
 
     /** @test */
@@ -150,8 +150,8 @@ class CompressorTest extends CompressionTestCase
 
         $path = Str::substr($this->filePath, 1);
         $this->assertFileExists("$this->tmpPath/export.zip", "File exists");
-        $this->assertContains("adding: $path/addresses.csv", $output, "Contains addresses.csv");
-        $this->assertContains("adding: $path/users.csv", $output, "Contains users.csv");
+        $this->assertStringContainsString("adding: $path/addresses.csv", $output, "Contains addresses.csv");
+        $this->assertStringContainsString("adding: $path/users.csv", $output, "Contains users.csv");
     }
 
     /** @test */
@@ -162,8 +162,8 @@ class CompressorTest extends CompressionTestCase
                        ->run();
 
         $path = Str::substr($this->filePath, 1);
-        $this->assertContains("adding: $path/addresses.csv", $output, "Contains addresses.csv");
-        $this->assertNotContains("adding: $path/users.csv", $output, "Not contains users.csv");
+        $this->assertStringContainsString("adding: $path/addresses.csv", $output, "Contains addresses.csv");
+        $this->assertStringNotContainsString("adding: $path/users.csv", $output, "Not contains users.csv");
     }
 
     /** @test */
@@ -174,8 +174,8 @@ class CompressorTest extends CompressionTestCase
                        ->run();
 
         $path = Str::substr($this->filePath, 1);
-        $this->assertContains("adding: $path/addresses.csv", $output, "Contains addresses.csv");
-        $this->assertNotContains("adding: $path.csv", $output, "Not contains users.csv");
+        $this->assertStringContainsString("adding: $path/addresses.csv", $output, "Contains addresses.csv");
+        $this->assertStringNotContainsString("adding: $path.csv", $output, "Not contains users.csv");
     }
 
     /** @test */
