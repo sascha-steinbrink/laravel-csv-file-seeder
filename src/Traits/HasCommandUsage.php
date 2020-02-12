@@ -2,8 +2,8 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Traits;
 
-use RuntimeException;
 use Illuminate\Console\Command;
+use RuntimeException;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 /**

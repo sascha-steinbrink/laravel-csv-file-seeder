@@ -3,17 +3,17 @@
 namespace SaschaSteinbrink\LaravelCsvFileSeeder;
 
 use Exception;
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasConfigFile;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseCompression;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasCommandUsage;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseDbConnection;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\ProcessesCsvFile;
+use Illuminate\Support\Str;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Decompressor;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorFailed;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasCommandUsage;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasConfigFile;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\ProcessesCsvFile;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseCompression;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseDbConnection;
 
 /**
  * LaravelCsvFileSeeder.

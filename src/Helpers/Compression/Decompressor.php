@@ -4,10 +4,10 @@ namespace SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression;
 
 use Closure;
 use Illuminate\Support\Str;
-use Symfony\Component\Process\Process;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorFailed;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\DecompressionFailed;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorStartFailed;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\DecompressionFailed;
+use Symfony\Component\Process\Process;
 
 /**
  * Decompressor.

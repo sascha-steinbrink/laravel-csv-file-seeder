@@ -2,11 +2,11 @@
 
 namespace SaschaSteinbrink\LaravelCsvFileSeeder\Commands;
 
-use RuntimeException;
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
+use RuntimeException;
 use SaschaSteinbrink\LaravelCsvFileSeeder\CsvExporter;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Exceptions\CompressorStartFailed;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * CsvExportCommand.
