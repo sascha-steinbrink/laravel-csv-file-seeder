@@ -6,13 +6,13 @@ use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\DbHelper;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasConfigFile;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseCompression;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasCommandUsage;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseDbConnection;
-use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\ProcessesCsvFile;
 use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\Compression\Compressor;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Helpers\DbHelper;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasCommandUsage;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\HasConfigFile;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\ProcessesCsvFile;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseCompression;
+use SaschaSteinbrink\LaravelCsvFileSeeder\Traits\UseDbConnection;
 
 /**
  * CsvExporter.
